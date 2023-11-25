@@ -3,11 +3,7 @@
 
 # Set the TTY banner
 echo '' > /etc/issue
-echo '     ___    __                __    _                 ' >> /etc/issue
-echo '    /   |  / /___ ___  ____ _/ /   (_)___  __  ___  __' >> /etc/issue
-echo '   / /| | / / __ `__ \/ __ `/ /   / / __ \/ / / / |/_/' >> /etc/issue
-echo '  / ___ |/ / / / / / / /_/ / /___/ / / / / /_/ />  <  ' >> /etc/issue
-echo ' /_/  |_/_/_/ /_/ /_/\__,_/_____/_/_/ /_/\__,_/_/|_|  ' >> /etc/issue
+echo '   ROCKY LINUX'
 echo '   ANSSI-BP-028-2.0 COMPLIANT'                          >> /etc/issue
 echo ''                                                       >> /etc/issue
 

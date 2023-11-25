@@ -20,14 +20,13 @@ TEXT_SUCC="[${TEXT_GREEN}+${TEXT_RESET}]"
 #### VARIABLES
 ####
 
-
-
-# Information regarding the upstream AlmaLinux ISO
-ALMA_MIRROR="http://mirror.rackspeed.de" #Set it to whichever you want
-ALMA_RELEASE="9.2"
-ALMA_ARCH="x86_64"
-ALMA_FLAVOR="minimal" #Can be either "minimal", "dvd", or "boot"
-ALMA_URL="${ALMA_MIRROR}/almalinux/${ALMA_RELEASE}/isos/${ALMA_ARCH}/AlmaLinux-${ALMA_RELEASE}-${ALMA_ARCH}-${ALMA_FLAVOR}.iso"
+# Information regarding the upstream RockyLinux ISO
+ROCKY_MIRROR="download.rockylinux.org" #Set it to whichever you want
+ROCKY_MAJOR="9"
+ROCKY_MINOR="3"
+ROCKY_ARCH="x86_64"
+ROCKY_FLAVOR="minimal" #Can be either "minimal", "dvd", or "boot"
+ROCKY_URL="https://${ROCKY_MIRROR}/pub/rocky/${ROCKY_MAJOR}/isos/${ROCKY_ARCH}/Rocky-${ROCKY_MAJOR}.${ROCKY_MINOR}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso"
 
 # Build information
 WORKING_DIR=`pwd`
@@ -36,10 +35,10 @@ TMPDIR=`mktemp -d`                        # The temporary work directory
 NEW_ISO_ROOT="${TMPDIR}/isoroot"          # The root of the new ISO to build. Subdir of TMPDIR
 ISO_PATCH_PATH="${WORKING_DIR}/iso-patch" # The content of the directory will be copied to the root of the ISO before building
 
-# Information regarding the local AlmaLinux ISO
-ALMA_LOCAL_DIR="${WORKING_DIR}/AlmaLinux"
-ALMA_LOCAL_NAME="AlmaLinux-${ALMA_RELEASE}-${ALMA_ARCH}-${ALMA_FLAVOR}.iso"
-ALMA_LOCAL="${ALMA_LOCAL_DIR}/${ALMA_LOCAL_NAME}"
+# Information regarding the local RockyLinux ISO
+ROCKY_LOCAL_DIR="${WORKING_DIR}/RockyLinux"
+ROCKY_LOCAL_NAME="RockyLinux-${ROCKY_RELEASE}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso"
+ROCKY_LOCAL="${ROCKY_LOCAL_DIR}/${ROCKY_LOCAL_NAME}"
 
 # Information regarding the ISO patch to apply
 PATH_KICKSTARTS="${WORKING_DIR}/kickstarts"
@@ -55,16 +54,16 @@ PACKAGES_TO_ADD=`cat packages-to-add.txt`
 TARGET_BLOCK_DEVICE="vda" # Use vda if you're deploying on a VM with virtio storage
 
 # OpenSCAP / Compliance As Code (CAC) profile to apply
-SCAP_CONTENT="/usr/share/xml/scap/ssg/content/ssg-almalinux9-ds.xml"
-SCAP_ID_DATASTREAM="scap_org.open-scap_datastream_from_xccdf_ssg-almalinux9-xccdf.xml"
-SCAP_ID_XCCDF="scap_org.open-scap_cref_ssg-almalinux9-xccdf.xml"
+SCAP_CONTENT="/usr/share/xml/scap/ssg/content/ssg-rl${ROCKY_MAJOR}-ds.xml"
+SCAP_ID_DATASTREAM="scap_org.open-scap_datastream_from_xccdf_ssg-rl${ROCKY_MAJOR}-xccdf.xml"
+SCAP_ID_XCCDF="scap_org.open-scap_cref_ssg-rl${ROCKY_MAJOR}-xccdf.xml"
 SCAP_PROFILE="xccdf_org.ssgproject.content_profile_anssi_bp28_enhanced"
 
 # Information regarding the to-be-built ISO
-NEW_ISO_VERSION="${ALMA_RELEASE}"
+NEW_ISO_VERSION="${ROCKY_MAJOR}.${ROCKY_MINOR}"
 NEW_ISO_RELEASE="1"
 NEW_ISO_ARCH="x86_64"
-NEW_ISO_LABEL="AlmaLinux-ANSSI-BP-028"
+NEW_ISO_LABEL="RockyLinux-ANSSI-BP-028"
 NEW_ISO_NAME="${NEW_ISO_LABEL}-${NEW_ISO_VERSION}-${NEW_ISO_RELEASE}-${NEW_ISO_ARCH}.iso"
 NEW_ISO_DIR="./build"
 NEW_ISO="${NEW_ISO_DIR}/${NEW_ISO_NAME}"
@@ -95,15 +94,11 @@ MKISOFS_FLAGS="-o ${NEW_ISO} \
 
 
 # Print the banner
-echo '    ___    __                __    _                 '
-echo '   /   |  / /___ ___  ____ _/ /   (_)___  __  ___  __'
-echo '  / /| | / / __ `__ \/ __ `/ /   / / __ \/ / / / |/_/'
-echo ' / ___ |/ / / / / / / /_/ / /___/ / / / / /_/ />  <  '
-echo '/_/  |_/_/_/ /_/ /_/\__,_/_____/_/_/ /_/\__,_/_/|_|  '
-echo ' ANSSI-BP-028 COMPLIANT'
+echo 'ROCKYLINUX'
+echo 'ANSSI-BP-028-ENHANCED COMPLIANT'
 echo ' '
-echo "=> Builds an ANSSI-BP-028 compliant installation ISO from AlmaLinux 9.2"
-echo "=> AlmaLinux: https://almalinux.org/"
+echo "=> Builds an ANSSI-BP-028 compliant installation ISO from RockyLinux 9.2"
+echo "=> RockyLinux: https://rockylinux.org/"
 echo ' '
 
 
@@ -113,34 +108,34 @@ echo "===Buildlog===" > ${LOGFILE}
 
 
 
-# Check if the local AlmaLinux directory exists
-echo -n -e "${TEXT_INFO} Checking if the local AlmaLinux directory exists..."
-if [ ! -d ${ALMA_LOCAL_DIR} ]; then
+# Check if the local RockyLinux directory exists
+echo -n -e "${TEXT_INFO} Checking if the local RockyLinux directory exists..."
+if [ ! -d ${Rocky_LOCAL_DIR} ]; then
 	echo -n -e "${LINE_RESET}"
-	echo -e "${TEXT_INFO} Local AlmaLinux directory doesn't exist: creating ${ALMA_LOCAL_DIR}"
-	mkdir ${ALMA_LOCAL_DIR}
+	echo -e "${TEXT_INFO} Local RockyLinux directory doesn't exist: creating ${ROCKY_LOCAL_DIR}"
+	mkdir ${ROCKY_LOCAL_DIR}
 fi
 
 
 
 # Check if the ISO exists
-echo -n -e "${TEXT_INFO} Checking if the AlmaLinux ISO has already been downloaded..."
-if [ ! -f ${ALMA_LOCAL} ]; then
+echo -n -e "${TEXT_INFO} Checking if the RockyLinux ISO has already been downloaded..."
+if [ ! -f ${ROCKY_LOCAL} ]; then
 	echo -n -e "${LINE_RESET}"
-	echo -n -e "${TEXT_INFO} Downloading the upstream AlmaLinux ISO"
-	curl -o ${ALMA_LOCAL} ${ALMA_URL} &>> ${LOGFILE}
+	echo -n -e "${TEXT_INFO} Downloading the upstream RockyLinux ISO"
+	curl -o ${ROCKY_LOCAL} ${ROCKY_URL} &>> ${LOGFILE}
 	if [ $? -ne 0 ]; then
 		echo -n -e "${LINE_RESET}"
-		echo -e "${TEXT_FAIL} Failed to download the upstream AlmaLinux ISO"
+		echo -e "${TEXT_FAIL} Failed to download the upstream RockyLinux ISO"
 		rm -rf ${TMPDIR}
 		exit 255
 	else
 		echo -n -e "${LINE_RESET}"
-		echo -e "${TEXT_SUCC} Downloaded the upstream AlmaLinux ISO"
+		echo -e "${TEXT_SUCC} Downloaded the upstream RockyLinux ISO"
 	fi
 else
 	echo -n -e "${LINE_RESET}"
-	echo -e "${TEXT_INFO} Using previously downloaded AlmaLinux ISO"
+	echo -e "${TEXT_INFO} Using previously downloaded RockyLinux ISO"
 fi
 
 
@@ -160,32 +155,32 @@ fi
 
 
 
-# Extract the AlmaLinux ISO to the temporary directory
-echo -n -e "${TEXT_INFO} Extracting the AlmaLinux ISO..."
-xorriso -osirrox on -indev ${ALMA_LOCAL} -extract / ${NEW_ISO_ROOT} &>> ${LOGFILE}
+# Extract the RockyLinux ISO to the temporary directory
+echo -n -e "${TEXT_INFO} Extracting the RockyLinux ISO..."
+xorriso -osirrox on -indev ${ROCKY_LOCAL} -extract / ${NEW_ISO_ROOT} &>> ${LOGFILE}
 if [ $? -ne 0 ]; then
 	echo -n -e "${LINE_RESET}"
-	echo -e "${TEXT_FAIL} Failed to extract AlmaLinux ISO"
+	echo -e "${TEXT_FAIL} Failed to extract RockyLinux ISO"
 	rm -rf ${TMPDIR}
 	exit 255
 else
 	echo -n -e "${LINE_RESET}"
-	echo -e "${TEXT_SUCC} Extracted the AlmaLinux ISO"
+	echo -e "${TEXT_SUCC} Extracted the RockyLinux ISO"
 fi
 
 
 
 # Patch the ISO
-echo -n -e "${TEXT_INFO} Patching the AlmaLinux ISO..."
+echo -n -e "${TEXT_INFO} Patching the RockyLinux ISO..."
 cp -r ${ISO_PATCH_PATH}/* ${NEW_ISO_ROOT}/
 if [ $? -ne 0 ]; then
 	echo -n -e "${LINE_RESET}"
-	echo -e "${TEXT_FAIL} Failed to patch the AlmaLinux ISO"
+	echo -e "${TEXT_FAIL} Failed to patch the RockyLinux ISO"
 	rm -rf ${TMPDIR}
 	exit 255
 else
 	echo -n -e "${LINE_RESET}"
-	echo -e "${TEXT_SUCC} Patched the AlmaLinux ISO"
+	echo -e "${TEXT_SUCC} Patched the RockyLinux ISO"
 fi
 
 
@@ -244,10 +239,12 @@ echo -e "${TEXT_SUCC} Configured all kickstarts"
 # Configure ISOLINUX
 sed -i "s/%NEW_ISO_LABEL%/${NEW_ISO_LABEL}/g" ${NEW_ISO_ROOT}/isolinux/isolinux.cfg
 sed -i "s/%PATH_KICKSTART_MAIN%/kickstart.ks/g" ${NEW_ISO_ROOT}/isolinux/isolinux.cfg
-sed -i "s/%ALMA_VERSION%/${ALMA_RELEASE}/g" ${NEW_ISO_ROOT}/isolinux/isolinux.cfg
+sed -i "s/%ROCKY_VERSION%/${ROCKY_MAJOR}.${ROCKY_MINOR}/g" ${NEW_ISO_ROOT}/isolinux/isolinux.cfg
+
+# Configure ISOLINUX (GRUB)
 sed -i "s/%NEW_ISO_LABEL%/${NEW_ISO_LABEL}/g" ${NEW_ISO_ROOT}/isolinux/grub.conf
 sed -i "s/%PATH_KICKSTART_MAIN%/kickstart.ks/g" ${NEW_ISO_ROOT}/isolinux/grub.conf
-sed -i "s/%ALMA_VERSION%/${ALMA_RELEASE}/g" ${NEW_ISO_ROOT}/isolinux/grub.conf
+sed -i "s/%ROCKY_VERSION%/${ROCKY_MAJOR}.${ROCKY_MINOR}/g" ${NEW_ISO_ROOT}/isolinux/grub.conf
 echo -e "${TEXT_SUCC} Configured ISOLINUX"
 
 
@@ -255,7 +252,7 @@ echo -e "${TEXT_SUCC} Configured ISOLINUX"
 # Configure GRUB2
 sed -i "s/%NEW_ISO_LABEL%/${NEW_ISO_LABEL}/g" ${NEW_ISO_ROOT}/EFI/BOOT/grub.cfg
 sed -i "s/%PATH_KICKSTART_MAIN%/kickstart.ks/g" ${NEW_ISO_ROOT}/EFI/BOOT/grub.cfg
-sed -i "s/%ALMA_VERSION%/${ALMA_RELEASE}/g" ${NEW_ISO_ROOT}/EFI/BOOT/grub.cfg
+sed -i "s/%ROCKY_VERSION%/${ROCKY_MAJOR}.${ROCKY_MINOR}/g" ${NEW_ISO_ROOT}/EFI/BOOT/grub.cfg
 echo -e "${TEXT_SUCC} Configured GRUB2"
 
 
