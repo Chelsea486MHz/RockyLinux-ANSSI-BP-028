@@ -28,7 +28,7 @@ Vous devrez manuellement configurer `rsyslog` et ses certificats, ainsi que `sud
 
 L'image disque peut être construite automatiquement par un script fonctionnant dans un conteneur Docker. Une image Docker est construite automatiquement par la pipeline de CI du dépôt GitHub. Pour l'utiliser :
 
-`$ docker run --rm -v $(pwd)/build:/build chelsea486mhz/rockylinux-anssi-bp-028-build:9.3`
+`$ docker run --rm -v $(pwd)/RockyLinux:/RockyLinux -v $(pwd)/build:/build chelsea486mhz/rockylinux-anssi-bp-028-build:9.3`
 
 Sinon, l'image peut être construire et utilisée en local:
 
