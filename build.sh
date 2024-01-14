@@ -37,7 +37,7 @@ ISO_PATCH_PATH="${WORKING_DIR}/iso-patch" # The content of the directory will be
 
 # Information regarding the local RockyLinux ISO
 ROCKY_LOCAL_DIR="${WORKING_DIR}/RockyLinux"
-ROCKY_LOCAL_NAME="RockyLinux-${ROCKY_RELEASE}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso"
+ROCKY_LOCAL_NAME="RockyLinux-${ROCKY_MAJOR}.${ROCKY_MINOR}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso"
 ROCKY_LOCAL="${ROCKY_LOCAL_DIR}/${ROCKY_LOCAL_NAME}"
 
 # Information regarding the ISO patch to apply
