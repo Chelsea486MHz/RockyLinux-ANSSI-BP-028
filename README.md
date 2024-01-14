@@ -1,7 +1,7 @@
 # RockyLinux-ANSSI-BP-028
 
 ![](https://img.shields.io/badge/maintained-yes-green) ![](https://img.shields.io/github/license/Chelsea486MHz/RockyLinux-ANSSI-BP-028
-) ![](https://img.shields.io/github/actions/workflow/status/Chelsea486MHz/RockyLinux-ANSSI-BP-028/docker?label=build%20(docker)))
+) ![](https://img.shields.io/github/actions/workflow/status/Chelsea486MHz/RockyLinux-ANSSI-BP-028/docker?label=build%20(docker))
 
 
 ## Description
