@@ -3,3 +3,4 @@ authselect-compat
 qemu-guest-agent
 epel-release
 ansible
+scap-security-guide
