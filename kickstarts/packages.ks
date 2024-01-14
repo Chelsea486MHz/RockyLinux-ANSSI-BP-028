@@ -7,4 +7,6 @@ scap-security-guide
 openssh-server
 authselect-compat
 qemu-guest-agent
+epel-release
+ansible
 %end

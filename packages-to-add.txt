@@ -1,3 +1,5 @@
 GConf2
 authselect-compat
 qemu-guest-agent
+epel-release
+ansible

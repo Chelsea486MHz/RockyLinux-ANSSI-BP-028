@@ -23,7 +23,7 @@ TEXT_SUCC="[${TEXT_GREEN}+${TEXT_RESET}]"
 # Information regarding the upstream RockyLinux ISO
 ROCKY_MIRROR="download.rockylinux.org" #Set it to whichever you want
 ROCKY_MAJOR="9"
-ROCKY_MINOR="2"
+ROCKY_MINOR="3"
 ROCKY_ARCH="x86_64"
 ROCKY_FLAVOR="minimal" #Can be either "minimal", "dvd", or "boot"
 ROCKY_URL="https://${ROCKY_MIRROR}/pub/rocky/${ROCKY_MAJOR}/isos/${ROCKY_ARCH}/Rocky-${ROCKY_MAJOR}.${ROCKY_MINOR}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso"
@@ -80,7 +80,7 @@ MKISOFS_FLAGS="-o ${NEW_ISO} \
 	-e images/efiboot.img \
 	-graft-points EFI/BOOT=${NEW_ISO_ROOT}/EFI/BOOT images/efiboot.img=${NEW_ISO_ROOT}/images/efiboot.img \
 	-no-emul-boot \
-        -J \
+    -J \
 	-R \
 	-V ${NEW_ISO_LABEL} \
 	${NEW_ISO_ROOT}"
@@ -97,7 +97,7 @@ MKISOFS_FLAGS="-o ${NEW_ISO} \
 echo 'ROCKYLINUX'
 echo 'ANSSI-BP-028-ENHANCED COMPLIANT'
 echo ' '
-echo "=> Builds an ANSSI-BP-028 compliant installation ISO from RockyLinux 9.2"
+echo "=> Builds an ANSSI-BP-028 compliant installation ISO from RockyLinux 9.3"
 echo "=> RockyLinux: https://rockylinux.org/"
 echo ' '
 
@@ -110,7 +110,7 @@ echo "===Buildlog===" > ${LOGFILE}
 
 # Check if the local RockyLinux directory exists
 echo -n -e "${TEXT_INFO} Checking if the local RockyLinux directory exists..."
-if [ ! -d ${Rocky_LOCAL_DIR} ]; then
+if [ ! -d ${ROCKY_LOCAL_DIR} ]; then
 	echo -n -e "${LINE_RESET}"
 	echo -e "${TEXT_INFO} Local RockyLinux directory doesn't exist: creating ${ROCKY_LOCAL_DIR}"
 	mkdir ${ROCKY_LOCAL_DIR}
