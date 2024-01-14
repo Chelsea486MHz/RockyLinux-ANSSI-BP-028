@@ -24,6 +24,5 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: "{{defaultContext}}:auth"
         push: true
         tags: chelsea486mhz/rockylinux-anssi-bp-028-build:9.3
