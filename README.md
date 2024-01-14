@@ -33,8 +33,8 @@ L'image disque peut être construite automatiquement par un script fonctionnant 
 Sinon, l'image peut être construire et utilisée en local:
 
 ```
-$ docker build -t rockylinux-bp-028-9.3-dev .
-$ docker run --rm -v $(pwd):/app rockylinux-bp-028-9.3-dev
+$ docker build -t rockylinux-bp-028-build .
+$ docker run --rm -v $(pwd):/app rockylinux-bp-028-build
 ```
 
 L'image doit être reconstruite après chaque modification de `build.sh`.
