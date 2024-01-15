@@ -17,3 +17,5 @@ openscap
 openscap-scanner
 libopenscap.so.25
 scap-security-guide
+aide
+dnf-automatic
