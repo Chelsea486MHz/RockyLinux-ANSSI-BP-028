@@ -26,9 +26,10 @@ ROCKY_MAJOR="9"
 ROCKY_MINOR="3"
 ROCKY_ARCH="x86_64"
 ROCKY_FLAVOR="minimal" #Can be either "minimal", "dvd", or "boot"
-ROCKY_URL="https://${ROCKY_MIRROR}/pub/rocky/${ROCKY_MAJOR}/isos/${ROCKY_ARCH}/Rocky-${ROCKY_MAJOR}.${ROCKY_MINOR}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso"
+ROCKY_ISO_NAME="Rocky-${ROCKY_MAJOR}.${ROCKY_MINOR}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso"
+ROCKY_URL="https://${ROCKY_MIRROR}/pub/rocky/${ROCKY_MAJOR}/isos/${ROCKY_ARCH}/${ROCKY_ISO_NAME}"
 CHECKSUM_URL="https://${ROCKY_MIRROR}/pub/rocky/${ROCKY_MAJOR}/isos/${ROCKY_ARCH}/CHECKSUM"
-CHECKSUM=`curl -s ${CHECKSUM_URL} | grep SHA256 | grep Rocky-${ROCKY_MAJOR}.${ROCKY_MINOR}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso | cut -d ' ' -f 4`
+CHECKSUM=`curl -s ${CHECKSUM_URL} | grep SHA256 | grep ${ROCKY_ISO_NAME} | cut -d ' ' -f 4`
 
 # Build information
 WORKING_DIR=`pwd`
@@ -368,16 +369,17 @@ fi
 # Compute the new ISO's checksum
 echo -n -e "${TEXT_INFO} Computing the ISO checksum..."
 pushd ${NEW_ISO_DIR} &>> ${LOGFILE}
-sha256sum ${NEW_ISO_NAME} > ${NEW_SHA}
-popd &>> ${LOGFILE}
+sha256sum ${NEW_ISO_NAME} > ${NEW_SHA} &>> ${LOGFILE}
 if [ $? -ne 0 ]; then
 	echo -n -e "${LINE_RESET}"
-        echo -e "${TEXT_FAIL} Couldn't compute the SHA256"
-        rm -rf ${TMPDIR}
-        exit 255
+	echo -e "${TEXT_FAIL} Couldn't compute the SHA256"
+	popd &>> ${LOGFILE}
+	rm -rf ${TMPDIR}
+	exit 255
 else
+	popd &>> ${LOGFILE}
 	echo -n -e "${LINE_RESET}"
-        echo -e "${TEXT_SUCC} Computed the SHA256"
+    echo -e "${TEXT_SUCC} Computed the SHA256"
 fi
 
 
