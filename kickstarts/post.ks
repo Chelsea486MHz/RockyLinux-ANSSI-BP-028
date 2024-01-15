@@ -2,10 +2,9 @@
 %post --erroronfail
 
 # Set the TTY banner
-echo '' > /etc/issue
-echo '   ROCKY LINUX'
-echo '   ANSSI-BP-028-2.0 COMPLIANT'                          >> /etc/issue
-echo ''                                                       >> /etc/issue
+echo '   ROCKY LINUX' >> /etc/issue
+echo '   ANSSI-BP-028-2.0 COMPLIANT' >> /etc/issue
+echo '' >> /etc/issue
 
 # Set the SSH and cockpit banners
 sed -i 's/#Banner none/Banner \/etc\/issue/g'
