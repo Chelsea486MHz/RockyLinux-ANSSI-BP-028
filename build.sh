@@ -27,6 +27,8 @@ ROCKY_MINOR="3"
 ROCKY_ARCH="x86_64"
 ROCKY_FLAVOR="minimal" #Can be either "minimal", "dvd", or "boot"
 ROCKY_URL="https://${ROCKY_MIRROR}/pub/rocky/${ROCKY_MAJOR}/isos/${ROCKY_ARCH}/Rocky-${ROCKY_MAJOR}.${ROCKY_MINOR}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso"
+CHECKSUM_URL="https://${ROCKY_MIRROR}/pub/rocky/${ROCKY_MAJOR}/isos/${ROCKY_ARCH}/CHECKSUM"
+CHECKSUM=`curl -s ${CHECKSUM_URL} | grep SHA256 | grep Rocky-${ROCKY_MAJOR}.${ROCKY_MINOR}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso | cut -d ' ' -f 4`
 
 # Build information
 WORKING_DIR=`pwd`
@@ -136,6 +138,21 @@ if [ ! -f ${ROCKY_LOCAL} ]; then
 else
 	echo -n -e "${LINE_RESET}"
 	echo -e "${TEXT_INFO} Using previously downloaded RockyLinux ISO"
+fi
+
+
+
+# Check if the ISO checksum is correct
+echo -n -e "${TEXT_INFO} Checking if the checksum is valid..."
+ROCKY_CHECKSUM_LOCAL=`sha256sum ${ROCKY_LOCAL} | cut -d ' ' -f 1`
+if [ "${ROCKY_CHECKSUM_LOCAL}" != "${CHECKSUM}" ]; then
+	echo -n -e "${LINE_RESET}"
+	echo -e "${TEXT_FAIL} RockyLinux ISO checksum is invalid"
+	rm -rf ${TMPDIR}
+	exit 255
+else
+	echo -n -e "${LINE_RESET}"
+	echo -e "${TEXT_SUCC} RockyLinux ISO checksum is valid"
 fi
 
 
@@ -350,7 +367,9 @@ fi
 
 # Compute the new ISO's checksum
 echo -n -e "${TEXT_INFO} Computing the ISO checksum..."
-sha256sum ${NEW_ISO} > ${NEW_SHA}
+pushd ${NEW_ISO_DIR} &>> ${LOGFILE}
+sha256sum ${NEW_ISO_NAME} > ${NEW_SHA}
+popd &>> ${LOGFILE}
 if [ $? -ne 0 ]; then
 	echo -n -e "${LINE_RESET}"
         echo -e "${TEXT_FAIL} Couldn't compute the SHA256"
