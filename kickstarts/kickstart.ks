@@ -9,10 +9,10 @@ bootloader --boot-drive=%TARGET_BLOCK_DEVICE% --timeout=0 --append="rhgb quiet c
 # Automatically accept EULA
 eula --agreed
 
-# Reboot after install
+# Shutdown after install
 # Don't go graphical
 # Don't start the first-boot setup thing
-reboot
+poweroff
 skipx
 firstboot --disable
 
