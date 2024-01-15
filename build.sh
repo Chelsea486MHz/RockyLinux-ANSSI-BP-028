@@ -70,7 +70,7 @@ NEW_ISO_LABEL="RockyLinux-ANSSI-BP-028"
 NEW_ISO_NAME="${NEW_ISO_LABEL}-${NEW_ISO_VERSION}-${NEW_ISO_RELEASE}-${NEW_ISO_ARCH}.iso"
 NEW_ISO_DIR="./build"
 NEW_ISO="${NEW_ISO_DIR}/${NEW_ISO_NAME}"
-NEW_SHA="${NEW_ISO}.sha256sum"
+NEW_SHA="${NEW_ISO_NAME}.sha256sum"
 
 # Those are the flags used to rebuild the ISO image
 MKISOFS_FLAGS="-o ${NEW_ISO} \
@@ -369,11 +369,11 @@ fi
 # Compute the new ISO's checksum
 echo -n -e "${TEXT_INFO} Computing the ISO checksum..."
 pushd ${NEW_ISO_DIR} &>> ${LOGFILE}
-sha256sum ${NEW_ISO_NAME} > ${NEW_SHA} &>> ${LOGFILE}
+sha256sum ${NEW_ISO_NAME} > ${NEW_SHA}
 if [ $? -ne 0 ]; then
+	popd &>> ${LOGFILE}
 	echo -n -e "${LINE_RESET}"
 	echo -e "${TEXT_FAIL} Couldn't compute the SHA256"
-	popd &>> ${LOGFILE}
 	rm -rf ${TMPDIR}
 	exit 255
 else
