@@ -58,8 +58,8 @@ TARGET_BLOCK_DEVICE="vda" # Use vda if you're deploying on a VM with virtio stor
 
 # OpenSCAP / Compliance As Code (CAC) profile to apply
 SCAP_CONTENT="/usr/share/xml/scap/ssg/content/ssg-rl${ROCKY_MAJOR}-ds.xml"
-SCAP_ID_DATASTREAM="scap_org.open-scap_datastream_from_xccdf_ssg-rl${ROCKY_MAJOR}-xccdf.xml"
-SCAP_ID_XCCDF="scap_org.open-scap_cref_ssg-rl${ROCKY_MAJOR}-xccdf.xml"
+SCAP_ID_DATASTREAM="scap_org.open-scap_datastream_from_xccdf_ssg-rhel${ROCKY_MAJOR}-xccdf.xml"
+SCAP_ID_XCCDF="scap_org.open-scap_cref_ssg-rhel${ROCKY_MAJOR}-xccdf.xml"
 SCAP_PROFILE="xccdf_org.ssgproject.content_profile_anssi_bp28_enhanced"
 
 # Information regarding the to-be-built ISO
