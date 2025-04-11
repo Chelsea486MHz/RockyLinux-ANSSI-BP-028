@@ -1,4 +1,4 @@
-FROM rockylinux:9.3
+FROM rockylinux:9.5
 
 RUN dnf install -y epel-release
 RUN dnf install -y xorriso syslinux createrepo dnf-plugins-core
