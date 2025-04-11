@@ -23,7 +23,7 @@ TEXT_SUCC="[${TEXT_GREEN}+${TEXT_RESET}]"
 # Information regarding the upstream RockyLinux ISO
 ROCKY_MIRROR="download.rockylinux.org" #Set it to whichever you want
 ROCKY_MAJOR="9"
-ROCKY_MINOR="3"
+ROCKY_MINOR="5"
 ROCKY_ARCH="x86_64"
 ROCKY_FLAVOR="minimal" #Can be either "minimal", "dvd", or "boot"
 ROCKY_ISO_NAME="Rocky-${ROCKY_MAJOR}.${ROCKY_MINOR}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso"
