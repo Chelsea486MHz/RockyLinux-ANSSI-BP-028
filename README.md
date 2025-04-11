@@ -33,7 +33,7 @@ Sinon, l'image peut être construite et utilisée en local:
 
 ```
 $ docker build -t rockylinux-bp-028-build .
-$ docker run --rm -v $(pwd)/build:/build -v $(pwd)/RockyLinux:/RockyLinux -v $(pwd)/buildlog.txt:/buildlog.txt rockylinux-bp-028-build
+$ docker run --rm -v build:/build -v RockyLinux:/RockyLinux -v buildlog.txt:/buildlog.txt rockylinux-bp-028-build
 ```
 
 L'image doit être reconstruite après chaque modification de `build.sh`. L'image disque "source" de Rocky Linux est automatiquement téléchargée et son intégrité est vérifiée à chaque build.
