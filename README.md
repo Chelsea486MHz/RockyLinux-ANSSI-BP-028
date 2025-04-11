@@ -27,7 +27,7 @@ Ce fork de Rocky Linux répond aux exigences de L'ANSSI en matière de configura
 
 Vous pouvez reproduire automatiquement, depuis ce dépôt, l'image disque sécurisée en utilisant un script fonctionnant dans un conteneur Docker. Une image Docker est construite automatiquement par la pipeline de CI du dépôt GitHub. Pour l'utiliser :
 
-`$ docker run --rm -v $(pwd)/build:/build -v $(pwd)/RockyLinux:/RockyLinux -v $(pwd)/buildlog.txt:/buildlog.txt chelsea486mhz/rockylinux-anssi-bp-028-build:9.3`
+`$ docker run --rm -v $(pwd)/build:/build -v $(pwd)/RockyLinux:/RockyLinux -v $(pwd)/buildlog.txt:/buildlog.txt chelsea486mhz/rockylinux-anssi-bp-028-build:9.5`
 
 Sinon, l'image peut être construite et utilisée en local:
 

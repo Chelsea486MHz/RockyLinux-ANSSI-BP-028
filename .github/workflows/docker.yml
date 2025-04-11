@@ -25,4 +25,4 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: true
-        tags: chelsea486mhz/rockylinux-anssi-bp-028-build:9.3
+        tags: chelsea486mhz/rockylinux-anssi-bp-028-build:9.5
