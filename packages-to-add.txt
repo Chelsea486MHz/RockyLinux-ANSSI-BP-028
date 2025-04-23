@@ -1,4 +1,3 @@
-GConf2
 authselect-compat
 qemu-guest-agent
 epel-release
@@ -11,8 +10,6 @@ python3-packaging
 python3-cffi
 python3-ply
 sshpass
-ansible-core
-ansible
 openscap
 openscap-scanner
 libopenscap.so.25

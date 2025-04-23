@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./build:/app/build
+      - ./RockyLinux:/app/RockyLinux
+      - ./buildlog.txt:/app/buildlog.txt
+    privileged: true  # Needed for some operations like mounting ISO
