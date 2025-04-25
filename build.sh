@@ -14,27 +14,13 @@ TEXT_INFO="[${TEXT_YELLOW}i${TEXT_RESET}]"
 TEXT_FAIL="[${TEXT_RED}-${TEXT_RESET}]"
 TEXT_SUCC="[${TEXT_GREEN}+${TEXT_RESET}]"
 
-
-
-####
-#### VARIABLES
-####
-
-# Information regarding the upstream RockyLinux ISO
-ROCKY_MIRROR="download.rockylinux.org" #Set it to whichever you want
-ROCKY_MAJOR="9"
-ROCKY_MINOR="3"
-ROCKY_ARCH="x86_64"
-ROCKY_FLAVOR="minimal" #Can be either "minimal", "dvd", or "boot"
-ROCKY_ISO_NAME="Rocky-${ROCKY_MAJOR}.${ROCKY_MINOR}-${ROCKY_ARCH}-${ROCKY_FLAVOR}.iso"
-ROCKY_URL="https://${ROCKY_MIRROR}/pub/rocky/${ROCKY_MAJOR}/isos/${ROCKY_ARCH}/${ROCKY_ISO_NAME}"
-CHECKSUM_URL="https://${ROCKY_MIRROR}/pub/rocky/${ROCKY_MAJOR}/isos/${ROCKY_ARCH}/CHECKSUM"
-CHECKSUM=`curl -s ${CHECKSUM_URL} | grep SHA256 | grep ${ROCKY_ISO_NAME} | cut -d ' ' -f 4`
+# Load environment variables from the file
+source ./.env
 
 # Build information
-WORKING_DIR=`pwd`
+TMPDIR=`mktemp -d` # The temporary work directory
+WORKING_DIR=`pwd`  # The directory where this script is located
 LOGFILE="${WORKING_DIR}/buildlog.txt"     # Where this script will log stuff
-TMPDIR=`mktemp -d`                        # The temporary work directory
 NEW_ISO_ROOT="${TMPDIR}/isoroot"          # The root of the new ISO to build. Subdir of TMPDIR
 ISO_PATCH_PATH="${WORKING_DIR}/iso-patch" # The content of the directory will be copied to the root of the ISO before building
 
@@ -54,13 +40,7 @@ PATH_KICKSTART_POST="${NEW_ISO_ROOT}/post.ks"
 PATH_KICKSTART_USER="${NEW_ISO_ROOT}/users.ks"
 PATH_REPO="${NEW_ISO_ROOT}/ondisk"
 PACKAGES_TO_ADD=`cat packages-to-add.txt`
-TARGET_BLOCK_DEVICE="vda" # Use vda if you're deploying on a VM with virtio storage
-
-# OpenSCAP / Compliance As Code (CAC) profile to apply
-SCAP_CONTENT="/usr/share/xml/scap/ssg/content/ssg-rl${ROCKY_MAJOR}-ds.xml"
-SCAP_ID_DATASTREAM="scap_org.open-scap_datastream_from_xccdf_ssg-rhel${ROCKY_MAJOR}-xccdf.xml"
-SCAP_ID_XCCDF="scap_org.open-scap_cref_ssg-rhel${ROCKY_MAJOR}-xccdf.xml"
-SCAP_PROFILE="xccdf_org.ssgproject.content_profile_anssi_bp28_enhanced"
+TARGET_BLOCK_DEVICE=vda
 
 # Information regarding the to-be-built ISO
 NEW_ISO_VERSION="${ROCKY_MAJOR}.${ROCKY_MINOR}"
@@ -88,19 +68,11 @@ MKISOFS_FLAGS="-o ${NEW_ISO} \
 	-V ${NEW_ISO_LABEL} \
 	${NEW_ISO_ROOT}"
 
-
-
-####
-#### VARIABLES
-####
-
-
-
 # Print the banner
 echo 'ROCKYLINUX'
 echo 'ANSSI-BP-028-ENHANCED COMPLIANT'
 echo ' '
-echo "=> Builds an ANSSI-BP-028 compliant installation ISO from RockyLinux 9.3"
+echo "=> Builds an ANSSI-BP-028 compliant installation ISO from RockyLinux ${ROCKY_MAJOR}.${ROCKY_MINOR}"
 echo "=> RockyLinux: https://rockylinux.org/"
 echo ' '
 

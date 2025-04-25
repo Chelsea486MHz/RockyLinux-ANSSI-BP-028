@@ -1,13 +1,31 @@
-FROM rockylinux:9.3
+FROM rockylinux:9
 
-RUN dnf install -y epel-release
-RUN dnf install -y xorriso syslinux createrepo dnf-plugins-core
+# Install required dependencies
+RUN dnf -y install \
+    epel-release \
+    createrepo \
+    dnf-utils \
+    genisoimage \
+    isomd5sum \
+    syslinux \
+    xorriso \
+    && dnf clean all
 
-WORKDIR /
-ADD kickstarts /kickstarts
-ADD iso-patch /iso-patch
-ADD packages-to-add.txt /packages-to-add.txt
-ADD build.sh /build.sh
-RUN chmod +x /build.sh
+# Set up working directory
+WORKDIR /app
 
-ENTRYPOINT ["/build.sh"]
+# Copy all project files
+COPY kickstarts/ /app/kickstarts
+COPY iso-patch/ /app/iso-patch
+COPY .env /app/.env
+COPY packages-to-add.txt /app/packages-to-add.txt
+COPY build.sh /app/build.sh
+
+# Make the build script executable
+RUN chmod +x /app/build.sh
+
+# Create volume mount points
+RUN mkdir -p /app/build
+
+# Default command
+CMD ["/bin/bash", "-c", "/app/build.sh"]
