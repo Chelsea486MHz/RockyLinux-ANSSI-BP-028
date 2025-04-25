@@ -2,6 +2,7 @@ FROM rockylinux:9
 
 # Install required dependencies
 RUN dnf -y install \
+    epel-release \
     createrepo \
     dnf-utils \
     genisoimage \
@@ -14,7 +15,11 @@ RUN dnf -y install \
 WORKDIR /app
 
 # Copy all project files
-COPY . /app/
+COPY kickstarts/ /app/kickstarts
+COPY iso-patch/ /app/iso-patch
+COPY .env /app/.env
+COPY packages-to-add.txt /app/packages-to-add.txt
+COPY build.sh /app/build.sh
 
 # Make the build script executable
 RUN chmod +x /app/build.sh
