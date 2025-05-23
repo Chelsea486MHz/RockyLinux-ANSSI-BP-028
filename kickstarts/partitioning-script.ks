@@ -1,3 +1,4 @@
+%pre --interpreter=/bin/python3
 #!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
 
@@ -873,5 +874,6 @@ if not setup_users():
     errno=22
     logger.critical(f"Error {errno}")
     sys.exit(errno)
+%end
 
-
+%include /tmp/partitions
