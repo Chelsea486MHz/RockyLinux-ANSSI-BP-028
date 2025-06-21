@@ -21,7 +21,7 @@ Il est tout à fait possible d'élever le niveau de sécurité en modifiant les 
 
 Le manuel d'exploitation, contenant les manuels d'installation, utilisation, et modification, est disponible en PDF dans le répertoire `docs`. Il est également distribué au format PDF avec une signature PGP dans l'onglet "Releases" du dépôt GitHub.
 
-[Manuel d'exploitation v1.1 (Applicable pour OS v9.5-1)](https://github.com/Chelsea486MHz/RockyLinux-ANSSI-BP-028/releases/download/v9.5-1/manuel-exploitation.pdf)
+[Manuel d'exploitation v1.1 (Applicable pour OS v10.0-1)](https://github.com/Chelsea486MHz/RockyLinux-ANSSI-BP-028/releases/download/v10.0-1/manuel-exploitation.pdf)
 
 ## Conformité aux exigences de sécurité
 

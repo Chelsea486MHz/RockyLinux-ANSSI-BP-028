@@ -1,4 +1,4 @@
-FROM rockylinux:9
+FROM rockylinux:10
 
 # Install required dependencies
 RUN dnf -y install \
