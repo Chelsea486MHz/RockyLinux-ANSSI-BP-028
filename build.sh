@@ -221,6 +221,10 @@ echo -e "${TEXT_SUCC} => Configured the hardening kickstart"
 sed -i "s/%TARGET_BLOCK_DEVICE%/${TARGET_BLOCK_DEVICE}/g" ${PATH_KICKSTART_PART}
 echo -e "${TEXT_SUCC} => Configured the partitioning kickstart"
 
+# Configure the post-install kickstart
+sed -i "s/%SSH_PUBKEY%/${SSH_PUBKEY}/g" ${PATH_KICKSTART_POST}
+echo -e "${TEXT_SUCC} => Configured the post-install kickstart"
+
 # We're done
 echo -e "${TEXT_SUCC} Configured all kickstarts"
 

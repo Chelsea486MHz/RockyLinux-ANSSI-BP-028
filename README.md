@@ -63,6 +63,14 @@ C'est également de cas du serveur depuis lequel l'image est téléchargée :
 $ sed -i 's/download.rockylinux.org/mon.serveur.tld/g' .env
 ```
 
+Vous pouvez aussi y configurer la clé publique SSH qui sera utilisée pour se connecter en tant que `root`:
+
+```
+$ cat .env | grep SSH
+# The SSH key used to login as root on the installed system /!\
+SSH_PUBKEY="ssh-rsa AAAA... openpgp:0xdeadbeef"
+```
+
 ## Contributions
 
 Les contributions sont les bienvenues.

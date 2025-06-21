@@ -18,4 +18,7 @@ rm -f /etc/issue.d/cockpit
 systemctl enable sshd
 systemctl enable cockpit.socket
 
+# Authorize the SSH public key
+echo %SSH_PUBKEY% > /root/authorized_keys
+
 %end
