@@ -202,6 +202,11 @@ echo -e "${TEXT_INFO} Starting kickstart configuration..."
 
 # Configure the main kickstart
 sed -i "s/%TARGET_BLOCK_DEVICE%/${TARGET_BLOCK_DEVICE}/g" ${PATH_KICKSTART_MAIN}
+if [ "$AUTO_LVM" = true ]; then
+	sed -i "s/%KICKSTART_PART%/partitioning-script.ks/g" ${PATH_KICKSTART_MAIN}
+else
+	sed -i "s/%KICKSTART_PART%/partitioning.ks/g" ${PATH_KICKSTART_MAIN}
+fi
 echo -e "${TEXT_SUCC} => Configured the main kickstart"
 
 # Configure the OpenSCAP kickstart
