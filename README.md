@@ -21,7 +21,7 @@ Il est tout à fait possible d'élever le niveau de sécurité en modifiant les 
 
 Le manuel d'exploitation, contenant les manuels d'installation, utilisation, et modification, est disponible en PDF dans le répertoire `docs`. Il est également distribué au format PDF avec une signature PGP dans l'onglet "Releases" du dépôt GitHub.
 
-[Manuel d'exploitation v1.1 (Applicable pour OS v9.5-1)](https://github.com/Chelsea486MHz/RockyLinux-ANSSI-BP-028/releases/download/v9.5-1/manuel-exploitation.pdf)
+[Manuel d'exploitation v1.1 (Applicable pour OS v10.0-1)](https://github.com/Chelsea486MHz/RockyLinux-ANSSI-BP-028/releases/download/v10.0-1/manuel-exploitation.pdf)
 
 ## Conformité aux exigences de sécurité
 
@@ -61,6 +61,14 @@ C'est également de cas du serveur depuis lequel l'image est téléchargée :
 
 ```
 $ sed -i 's/download.rockylinux.org/mon.serveur.tld/g' .env
+```
+
+Vous pouvez aussi y configurer la clé publique SSH qui sera utilisée pour se connecter en tant que `root`:
+
+```
+$ cat .env | grep SSH
+# The SSH key used to login as root on the installed system /!\
+SSH_PUBKEY="ssh-rsa AAAA... openpgp:0xdeadbeef"
 ```
 
 ## Contributions

@@ -35,7 +35,7 @@ selinux --enforcing
 %include /mnt/install/repo/network.ks
 
 # Set up the partitions
-%include /mnt/install/repo/partitioning.ks
+%include /mnt/install/repo/%KICKSTART_PART%.ks
 
 # User config
 %include /mnt/install/repo/users.ks
